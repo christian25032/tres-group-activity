@@ -11,28 +11,27 @@ async function fetchHolidays(country, year, month, day) {
   if (month) params.set('month', month);
   if (day) params.set('day', day);
   async function fetchHolidays(country, year, month, day) {
+  async function fetchHolidays(country, year, month, day) {
   const API_KEY = "aba48efde4a846efb076883f1a4bcff2";
 
   let url = `https://holidays.abstractapi.com/v1/?api_key=${API_KEY}&country=${country}&year=${year}`;
 
-  if (month) url += `&month=${month}`;
-  if (day) url += `&day=${day}`;
+  if (month) {
+    url += `&month=${month}`;
+  }
+
+  if (day) {
+    url += `&day=${day}`;
+  }
 
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error("Request failed");
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || "Request failed");
   }
 
   return await response.json();
-}
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || 'Request failed');
-  }
-
-  return response.json();
 }
 
 function renderResults(data) {
