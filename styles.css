@@ -83,6 +83,73 @@ button {
   color: #9fb0cb;
 }
 
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  margin-right: 10px;
+  font-size: 0.85rem;
+}
+.badge.success {
+  background: #e6fbf4;
+  color: #0b5b4a;
+}
+
+/* Animations and interactive polish */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px) scale(.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes floatBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(105,140,255,0.02), rgba(85,213,194,0.02), rgba(255,255,255,0.01));
+  z-index: 0;
+  mix-blend-mode: screen;
+  background-size: 200% 200%;
+  animation: floatBg 18s linear infinite;
+}
+
+.panel { position: relative; z-index: 1; }
+
+.card.animate { animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both; }
+.results-title.animate { animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both; }
+.badge { transition: transform .18s ease, opacity .2s ease; }
+.badge.success.animate { animation: fadeUp 300ms ease both; }
+
+button:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 8px 20px rgba(34,50,78,0.25); }
+button:active { transform: translateY(0) scale(.995); }
+
+.holiday-card { transition: transform .22s ease, box-shadow .22s ease; }
+.holiday-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,8,23,0.5); }
+
+.card-left .card-title { text-shadow: 0 1px 0 rgba(0,0,0,0.35); }
+
+.card-icon { transition: transform .28s cubic-bezier(.2,.9,.2,1); }
+.holiday-card:hover .card-icon { transform: translateY(-6px) rotate(-6deg); }
+
+/* make rows slightly separated on small screens */
+@media (max-width: 700px) {
+  .holiday-card { grid-template-columns: 1fr; }
+  .card-right .row { grid-template-columns: 1fr; }
+}
+
+.results-title {
+  margin: 18px 0 8px;
+  font-size: 1.1rem;
+}
+
 .results {
   margin-top: 16px;
   display: grid;
@@ -94,6 +161,54 @@ button {
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.holiday-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  font-size: 1.4rem;
+}
+.card-title {
+  font-weight: 800;
+  font-size: 1rem;
+}
+.card-local {
+  color: #cfe6f7;
+  font-size: 0.95rem;
+}
+
+.card-right .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 18px;
+  padding: 6px 0;
+  border-top: 1px dashed rgba(255,255,255,0.02);
+}
+.card-right .label {
+  color: #9fb0cb;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.card-right .value {
+  color: #e6f0fb;
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .card h3 {

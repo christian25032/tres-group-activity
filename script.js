@@ -28,19 +28,76 @@ function renderResults(data) {
     return;
   }
 
-  data.forEach((holiday) => {
+  // show small success badge and heading
+  status.innerHTML = '<span class="badge success">Success</span>';
+
+  const heading = document.createElement('h2');
+  heading.className = 'results-title';
+  heading.textContent = 'Upcoming holidays';
+  results.appendChild(heading);
+  // animate heading
+  requestAnimationFrame(() => heading.classList.add('animate'));
+
+  function formatDate(d) {
+    try {
+      const parts = d.split('-'); // YYYY-MM-DD
+      if (parts.length === 3) return `${parts[1]}/${parts[2]}/${parts[0]}`;
+      return d;
+    } catch (e) {
+      return d || 'Unknown';
+    }
+  }
+
+  data.forEach((holiday, i) => {
     const card = document.createElement('article');
-    card.className = 'card';
+    card.className = 'card holiday-card';
 
-    const title = document.createElement('h3');
+    const left = document.createElement('div');
+    left.className = 'card-left';
+    const icon = document.createElement('div');
+    icon.className = 'card-icon';
+    icon.textContent = '📅';
+    const title = document.createElement('div');
+    title.className = 'card-title';
     title.textContent = holiday.name || 'Holiday';
+    const local = document.createElement('div');
+    local.className = 'card-local';
+    local.textContent = holiday.name_local || holiday.local_name || '';
+    left.append(icon, title, local);
 
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = `${holiday.date || 'Unknown date'} · ${holiday.week_day || 'Unknown day'} · ${holiday.type || 'Holiday'}`;
+    const right = document.createElement('div');
+    right.className = 'card-right';
 
-    card.append(title, meta);
+    const makeRow = (labelText, valueText) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = labelText;
+      const value = document.createElement('div');
+      value.className = 'value';
+      value.textContent = valueText || '—';
+      row.append(label, value);
+      return row;
+    };
+
+    right.append(
+      makeRow('Name (local)', holiday.name_local || holiday.local_name || '—'),
+      makeRow('Date', formatDate(holiday.date || holiday.datetime || '—')),
+      makeRow('Week day', holiday.week_day || holiday.weekday || holiday.weekday_name || '—'),
+      makeRow('Type', holiday.type || '—'),
+      makeRow('Language', holiday.language || '—'),
+      makeRow('Location', holiday.location || holiday.location_name || '—'),
+      makeRow('Country', holiday.country || '—'),
+      makeRow('Description', holiday.description || '—')
+    );
+
+    card.append(left, right);
+    // stagger entrance animations
+    card.style.animationDelay = `${i * 80}ms`;
     results.appendChild(card);
+    // trigger animation after append
+    requestAnimationFrame(() => card.classList.add('animate'));
   });
 }
 
