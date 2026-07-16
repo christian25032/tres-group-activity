@@ -11,7 +11,6 @@ async function fetchHolidays(country, year, month, day) {
   if (month) params.set('month', month);
   if (day) params.set('day', day);
   async function fetchHolidays(country, year, month, day) {
-  async function fetchHolidays(country, year, month, day) {
   const API_KEY = "aba48efde4a846efb076883f1a4bcff2";
 
   let url = `https://holidays.abstractapi.com/v1/?api_key=${API_KEY}&country=${country}&year=${year}`;
