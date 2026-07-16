@@ -10,7 +10,22 @@ async function fetchHolidays(country, year, month, day) {
   const params = new URLSearchParams({ country, year });
   if (month) params.set('month', month);
   if (day) params.set('day', day);
-  const response = await fetch(`/api/holidays?${params.toString()}`);
+  async function fetchHolidays(country, year, month, day) {
+  const API_KEY = "aba48efde4a846efb076883f1a4bcff2";
+
+  let url = `https://holidays.abstractapi.com/v1/?api_key=${API_KEY}&country=${country}&year=${year}`;
+
+  if (month) url += `&month=${month}`;
+  if (day) url += `&day=${day}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  return await response.json();
+}
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
