@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRES Holiday Explorer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel">
+        <h1>TRES Holiday Explorer</h1>
+        <p class="subtitle">Lookup public holidays by country and year with the Abstract API.</p>
+
+        <form id="holiday-form">
+          <div class="controls">
+            <label>
+              Country
+              <input id="country" name="country" maxlength="2" value="US" required />
+            </label>
+            <label>
+              Year (optional)
+              <input id="year" name="year" type="number" min="2000" max="2100" placeholder="2026" />
+            </label>
+            <label>
+              Month (optional)
+              <input id="month" name="month" type="number" min="1" max="12" placeholder="e.g. 2" />
+            </label>
+            <label>
+              Day (optional)
+              <input id="day" name="day" type="number" min="1" max="31" placeholder="e.g. 11" />
+            </label>
+          </div>
+          <button type="submit">Search holidays</button>
+        </form>
+
+        <div id="status" class="status" aria-live="polite">Loading sample holidays…</div>
+        <div id="results" class="results"></div>
+      </section>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
